@@ -18,6 +18,11 @@ class Widgets extends \lithium\data\Model {
 
         return $widget;
     }
+
+    public function save($widget, $data) {
+        $data['modified_at'] = time();
+        return parent::save($widget, $data);
+    }
 }
 
 ?>
