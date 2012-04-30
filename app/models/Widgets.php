@@ -4,7 +4,7 @@ namespace app\models;
 class Widgets extends \lithium\data\Model {
 
     public static function findInActive() {
-        return static::findAll([
+        return static::all([
             'conditions' => [
                 'active' => false
              ]

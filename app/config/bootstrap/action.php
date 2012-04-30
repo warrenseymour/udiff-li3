@@ -51,4 +51,20 @@ Dispatcher::applyFilter('run', function($self, $params, $chain) {
 	return $chain->next($self, $params, $chain);
 });
 
+use app\models\Widgets;
+use \lithium\security\Auth;
+
+Dispatcher::applyFilter('_callable', function($self, $params, $chain) {
+    $controller = $chain->next($self, $params, $chain);
+    $user = $controller->user;
+
+    Widgets::applyFilter('save', function($self, $params, $chain) use ($user) {
+        if($user->isReadOnly) {
+            return;
+        }
+        return $chain->next($self, $params, $chain);
+    });
+
+    return $controller;
+});
 ?>
